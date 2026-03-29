@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HopeBot Chat - Mengo Senior School</title>
+  <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Font Awesome 6 <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>-->
+  <!--Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .chat-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      height: 500px;
+    }
+
+    .chat-header {
+      background-color: var(--primary-maroon);
+      color: var(--white);
+      padding: 15px 20px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #FFF6F6;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .message.student {
+      justify-content: flex-end;
+    }
+
+    .message .text {
+      background-color: var(--primary-maroon);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 15px;
+      max-width: 70%;
+    }
+
+    .message.student .text {
+      background-color: #555555;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 0 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .chat-input button {
+      background-color: var(--primary-maroon);
+      color: white;
+      padding: 0 20px;
+      border-radius: 0 0 10px 0;
+    }
+
+    .chat-intro {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-dark);
+      font-size: 1rem;
+    }
+
+    .chat-intro i {
+      color: var(--primary-maroon);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1><i class="fas fa-robot"></i> HopeBot</h1>
+    <div class="burger" id="burger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="chat.html">Chat</a>
+      <a href="journal.html">Journal</a>
+      <a href="report.html">Report</a>
+      <a href="breathing.html">Breathing</a>
+      <a href="mindgames.html">Mind Games</a>
+      <a href="help.html">Help</a>
+    </nav>
+  </header>
+
+  <!-- Chat Intro -->
+  <div class="chat-intro">
+     Welcome! Chat with HopeBot <i class="fas fa-comments"></i> to get support for your studies, stress, or emotions. Your conversations are <strong>private and safe</strong>.
+  </div>
+
+  <!-- Chat Container -->
+  <div class="chat-container">
+    <div class="chat-messages" id="chat-messages">
+      <!-- Initial Bot Message -->
+      <div class="message bot">
+        <div class="text"><i class="fas fa-robot"></i> Hi! I'm HopeBot. How can I help you today?</div>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Type your message here...">
+      <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Hamburger menu toggle
+    const burger = document.getElementById('burger');
+    const nav = document.getElementById('nav-links');
+
+    burger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+
+    //
+
+// ===== Chat System Upgrade =====
+
+// Store name
+let userName = localStorage.getItem("hopebot_name");
+
+// Ask for name if not saved
+if (!userName) {
+  userName = prompt("Hi! What’s your name?");
+  if (userName) localStorage.setItem("hopebot_name", userName);
+}
+
+// Responses
+const botReplies = {
+  greeting: [
+    `Hey ${userName} 😊 I'm here for you. What's going on?`,
+    `Hi ${userName}! How are you feeling today?`,
+    `Hello 👋 you can talk to me about anything.`
+  ],
+  stress: [
+    "That sounds stressful... do you want to talk about it?",
+    "I'm here for you 💛 maybe try a breathing exercise?",
+    "Take a deep breath... you're not alone in this."
+  ],
+  sad: [
+    "I'm really sorry you're feeling that way 💛",
+    "That sounds tough… do you want to talk more about it?"
+  ],
+  school: [
+    "School can be overwhelming sometimes. What subject is stressing you?",
+    "Let’s break it down together. What part is difficult?"
+  ],
+  motivation: [
+    "You're stronger than you think 💪 keep going!",
+    "Small steps still move you forward.",
+    "You’ve got this, don’t give up!"
+  ],
+  bye: [
+    "Take care 💛 I'm always here if you need me.",
+    "Goodbye! Remember you're doing your best."
+  ],
+  default: [
+    "I’m listening… tell me more 😊",
+    "Hmm, I want to understand better. Can you explain?",
+    "That sounds important. Go on…"
+  ]
+};
+
+// Helper
+function random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// Smart reply system
+function getBotReply(message) {
+  message = message.toLowerCase();
+
+  if (message.includes("hi") || message.includes("hello"))
+    return random(botReplies.greeting);
+
+  if (message.includes("stress") || message.includes("tired") || message.includes("overwhelmed"))
+    return random(botReplies.stress);
+
+  if (message.includes("sad") || message.includes("cry") || message.includes("bad"))
+    return random(botReplies.sad);
+
+  if (message.includes("exam") || message.includes("test") || message.includes("school") || message.includes("homework"))
+    return random(botReplies.school);
+
+  if (message.includes("motivate") || message.includes("give up"))
+    return random(botReplies.motivation);
+
+  if (message.includes("bye"))
+    return random(botReplies.bye);
+
+  return random(botReplies.default);
+}
+
+// Elements
+const sendBtn = document.getElementById('send-btn');
+const userInput = document.getElementById('user-input');
+const chatMessages = document.getElementById('chat-messages');
+
+// Send events
+sendBtn.addEventListener('click', sendMessage);
+userInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') sendMessage();
+});
+
+// Add message function
+function addMessage(text, sender) {
+  const msgDiv = document.createElement('div');
+  msgDiv.classList.add('message', sender);
+  msgDiv.innerHTML = `<div class="text">${sender === 'bot' ? '<i class="fas fa-robot"></i> ' : ''}${text}</div>`;
+  chatMessages.appendChild(msgDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Send message
+function sendMessage() {
+  const msg = userInput.value.trim();
+  if (!msg) return;
+
+  addMessage(msg, 'student');
+  userInput.value = '';
+
+  // Typing indicator
+  const typing = document.createElement('div');
+  typing.classList.add('message', 'bot');
+  typing.innerHTML = `<div class="text"><i class="fas fa-robot"></i> Typing...</div>`;
+  chatMessages.appendChild(typing);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Delay reply
+  setTimeout(() => {
+    typing.remove();
+    const reply = getBotReply(msg);
+    addMessage(reply, 'bot');
+  }, 1200 + Math.random() * 800);
+}
+
+ 
+  </script>
+</body>
+</html>

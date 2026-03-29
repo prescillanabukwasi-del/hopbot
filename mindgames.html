@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HopeBot Mind Games - Mengo Senior School</title>
+<!--font awesome-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<style>
+  .games-container {
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .games-intro {
+    color: var(--text-dark);
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  .game {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #FFF6F6;
+    border-radius: 10px;
+  }
+  .tiles, .emoji-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+  }
+  .tile, .card {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-maroon-light);
+    color: var(--white);
+  }
+  .tile:active, .card:active { transform: scale(0.9); }
+  .card.flipped {
+    background-color: var(--white);
+    color: var(--primary-maroon);
+  }
+  .game button {
+    background-color: var(--primary-maroon);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .game button:hover { background-color: var(--primary-maroon-dark); }
+  .result {
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--primary-maroon);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fas fa-robot"></i> HopeBot</h1>
+  <div class="burger" id="burger"><div></div><div></div><div></div></div>
+  <nav id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="chat.html">Chat</a>
+    <a href="journal.html">Journal</a>
+    <a href="report.html">Report</a>
+    <a href="breathing.html">Breathing</a>
+    <a href="mindgames.html">Mind Games</a>
+    <a href="help.html">Help</a>
+  </nav>
+</header>
+
+<div class="games-container">
+  <div class="games-intro">
+    <i class="fas fa-gamepad"></i> Challenge your brain! Play these fun mind games.
+  </div>
+
+  <!-- Game 1: Simon Says -->
+  <div class="game" id="simon-game">
+    <h3>Color Sequence Memory </h3>
+    <div class="tiles" id="tiles"></div>
+    <button id="start-simon">Start Game</button>
+    <div class="result" id="simon-result"></div>
+  </div>
+
+  <!-- Game 2: Emoji Memory -->
+  <div class="game" id="emoji-game">
+    <h3>Emoji Memory </h3>
+    <div class="emoji-grid" id="emoji-grid"></div>
+    <button id="start-emoji">Start Game</button>
+    <div class="result" id="emoji-result"></div>
+  </div>
+</div>
+
+<script>
+  // Hamburger
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav-links');
+  burger.addEventListener('click', () => { nav.classList.toggle('active'); });
+
+  // ===== Simon Says Game =====
+  const colors = ["#d90404","#800000","#ff595e","#ffb3b3"];
+  const tilesDiv = document.getElementById("tiles");
+  const simonResult = document.getElementById("simon-result");
+  const startSimonBtn = document.getElementById("start-simon");
+
+  let sequence = [], playerSequence = [], acceptingInput = false;
+
+  function createTiles() {
+    tilesDiv.innerHTML = "";
+    colors.forEach((color,index)=>{
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      tile.style.backgroundColor = color;
+      tile.addEventListener("click", () => {
+        if(!acceptingInput) return;
+        playerSequence.push(index);
+        animateTile(tile);
+        checkPlayerMove();
+      });
+      tilesDiv.appendChild(tile);
+    });
+  }
+
+  function animateTile(tile) {
+    tile.style.opacity = "0.5";
+    setTimeout(()=>tile.style.opacity="1",200);
+  }
+
+  function startSimon() {
+    sequence = [];
+    playerSequence = [];
+    simonResult.textContent="";
+    nextStep();
+  }
+
+  function nextStep() {
+    acceptingInput = false;
+    const nextColor = Math.floor(Math.random()*colors.length);
+    sequence.push(nextColor);
+    let i = 0;
+    const interval = setInterval(()=>{
+      animateTile(tilesDiv.children[sequence[i]]);
+      i++;
+      if(i>=sequence.length) { clearInterval(interval); acceptingInput=true; playerSequence=[]; }
+    },600);
+  }
+
+  function checkPlayerMove() {
+    const currentIndex = playerSequence.length -1;
+    if(playerSequence[currentIndex] !== sequence[currentIndex]) {
+      simonResult.textContent = "❌ Wrong! Game Over. Score: " + (sequence.length-1);
+      acceptingInput=false;
+    } else if(playerSequence.length === sequence.length) {
+      simonResult.textContent = "✅ Correct! Next round...";
+      setTimeout(nextStep, 800);
+    }
+  }
+
+  createTiles();
+  startSimonBtn.addEventListener("click", startSimon);
+
+  // ===== Emoji Memory Game =====
+  const emojiGrid = document.getElementById("emoji-grid");
+  const emojiResult = document.getElementById("emoji-result");
+  const startEmojiBtn = document.getElementById("start-emoji");
+
+  const emojis = ["😀","🎓","🧠","📚","✏️","🖍️","🏫","🤖"];
+  let cards = [], firstCard=null, secondCard=null, matched=0;
+
+  function shuffle(array) {
+    return array.sort(()=>Math.random()-0.5);
+  }
+
+  function createEmojiCards() {
+    emojiGrid.innerHTML="";
+    const pairEmojis = [...emojis, ...emojis];
+    cards = shuffle(pairEmojis);
+    cards.forEach((emoji,index)=>{
+      const card = document.createElement("div");
+      card.className="card";
+      card.dataset.emoji = emoji;
+      card.textContent="";
+      card.addEventListener("click", ()=>flipCard(card));
+      emojiGrid.appendChild(card);
+    });
+    matched=0;
+    firstCard=secondCard=null;
+    emojiResult.textContent="";
+  }
+
+  function flipCard(card) {
+    if(card===firstCard || card.classList.contains("flipped")) return;
+    card.classList.add("flipped");
+    card.textContent = card.dataset.emoji;
+    if(!firstCard) firstCard = card;
+    else {
+      secondCard = card;
+      checkMatch();
+    }
+  }
+
+  function checkMatch() {
+    if(firstCard.dataset.emoji === secondCard.dataset.emoji){
+      matched+=2;
+      firstCard=null;
+      secondCard=null;
+      if(matched===cards.length) emojiResult.textContent="🎉 You matched all emojis!";
+    } else {
+      setTimeout(()=>{
+        firstCard.classList.remove("flipped");
+        secondCard.classList.remove("flipped");
+        firstCard.textContent="";
+        secondCard.textContent="";
+        firstCard=null;
+        secondCard=null;
+      },800);
+    }
+  }
+
+  startEmojiBtn.addEventListener("click", createEmojiCards);
+</script>
+</body>
+</html>

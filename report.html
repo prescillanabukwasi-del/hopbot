@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HopeBot Anonymous Report</title>
+  <!-- Font Awesome  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+ /* Styling */
+  body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #f0f8ff, #fff9e6); /* calming gradient */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #333;
+}
+
+  .tag {
+  padding: 40px 20px 20px 20px;
+  background-color: #d90404; /* Mengo red */
+  color: #fff;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+  .tag h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+  .tag p {
+  font-size: 1.2rem;
+}
+
+/* Form Section */
+  .form-section {
+  margin: 50px auto;
+  max-width: 500px;
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+  label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+  input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+  textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+  .anonymous-container {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+  button {
+  background-color: #ffbd00; /* Mengo yellow */
+  color: #000;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+  button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Confirmation Message */
+  #confirmation {
+  margin-top: 20px;
+  font-weight: bold;
+  color: green;
+}
+  </style>
+</head>
+<body>
+    <header>
+    <h1><i class="fas fa-robot"></i> HopeBot</h1>
+    <div class="burger" id="burger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="chat.html">Chat</a>
+      <a href="journal.html">Journal</a>
+      <a href="report.html">Report</a>
+      <a href="breathing.html">Breathing</a>
+      <a href="mindgames.html">Mind Games</a>
+      <a href="help.html">Help</a>
+    </nav>
+  </header>
+  <div class="tag">
+    <h1>Contact a Counsellor</h1>
+    <p>Your messages are private and confidential. Feel free to share your concerns.</p>
+  </div>
+
+  <main>
+    <section class="form-section">
+      <form id="counsellorForm">
+        <label for="name">Name (Optional):</label>
+        <input type="text" id="name" placeholder="Your Name">
+
+        <label for="email">Email (Optional):</label>
+        <input type="email" id="email" placeholder="Your Email">
+
+        <label for="message">Message / Concern:</label>
+        <textarea id="message" placeholder="Type your message here..." required></textarea>
+
+        <div class="anonymous-container">
+          <input type="checkbox" id="anonymous">
+          <label for="anonymous">Send anonymously</label>
+        </div>
+
+        <button type="submit">Send Message</button>
+      </form>
+      <div id="confirmation"></div>
+    </section>
+  </main>
+</body>
+<script src="report.js"></script>
+</html>
+

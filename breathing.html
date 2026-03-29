@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HopeBot Breathing Exercises</title>
+  <!-- Font Awesome -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!--script link-->
+   <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .breathing-container {
+      max-width: 600px;
+      margin: 50px auto;
+      text-align: center;
+      background-color: var(--white);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .breathing-intro {
+      color: var(--text-dark);
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .circle {
+      width: 150px;
+      height: 150px;
+      border: 5px solid var(--primary-maroon);
+      border-radius: 50%;
+      margin: 30px auto;
+      transition: transform 4s ease-in-out;
+    }
+
+    .controls button {
+      background-color: var(--primary-maroon);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 5px;
+      transition: background 0.3s;
+    }
+
+    .controls button:hover {
+      background-color: var(--primary-maroon-dark);
+    }
+
+    .phase {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 20px;
+      color: var(--primary-maroon);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1><i class="fas fa-robot"></i> HopeBot</h1>
+    <div class="burger" id="burger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="chat.html">Chat</a>
+      <a href="journal.html">Journal</a>
+      <a href="report.html">Report</a>
+      <a href="breathing.html">Breathing</a>
+      <a href="mindgames.html">Mind Games</a>
+      <a href="help.html">Help</a>
+    </nav>
+  </header>
+
+  <!-- Breathing Intro -->
+  <div class="breathing-container">
+    <div class="breathing-intro">
+      Follow the circle to do a calming breathing exercise. Inhale Hold  Exhale. Repeat to reduce stress and relax.
+    </div>
+    <div class="circle" id="circle"></div>
+    <div class="phase" id="phase">Ready</div>
+    <div class="controls">
+      <button id="start-btn"><i class="fas fa-play"></i> Start</button>
+      <button id="stop-btn"><i class="fas fa-stop"></i> Stop</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Hamburger toggle
+    const burger = document.getElementById('burger');
+    const nav = document.getElementById('nav-links');
+    burger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+
+    // Breathing exercise logic
+    const startBtn = document.getElementById('start-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const circle = document.getElementById('circle');
+    const phaseText = document.getElementById('phase');
+
+    let interval;
+    const phases = [
+      {name: "Inhale", duration: 4000, scale: 1.5},
+      {name: "Hold ", duration: 4000, scale: 1.5},
+      {name: "Exhale", duration: 4000, scale: 1},
+      {name: "Hold ", duration: 4000, scale: 1}
+    ];
+    let phaseIndex = 0;
+
+    function startBreathing() {
+      if (interval) return;
+      phaseIndex = 0;
+      runPhase();
+    }
+
+    function runPhase() {
+      const phase = phases[phaseIndex];
+      circle.style.transform = `scale(${phase.scale})`;
+      phaseText.textContent = phase.name;
+
+      interval = setTimeout(() => {
+        phaseIndex = (phaseIndex + 1) % phases.length;
+        runPhase();
+      }, phase.duration);
+    }
+
+    function stopBreathing() {
+      clearTimeout(interval);
+      interval = null;
+      circle.style.transform = "scale(1)";
+      phaseText.textContent = "Stopped";
+    }
+
+    startBtn.addEventListener('click', startBreathing);
+    stopBtn.addEventListener('click', stopBreathing);
+  </script>
+</body>
+</html>

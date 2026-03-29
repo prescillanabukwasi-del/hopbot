@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HopeBot Help - Mengo Senior School</title>
+<!--font awesome-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="style.css">
+<style>
+  .help-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .help-container h2 {
+    color: var(--primary-maroon);
+    margin-bottom: 15px;
+  }
+  .help-container p, .help-container li {
+    color: var(--text-dark);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  ul { padding-left: 20px; }
+  .contact {
+    margin-top: 20px;
+    font-weight: 600;
+    color: var(--primary-maroon);
+  }
+  .contact a { color: var(--primary-maroon); text-decoration: none; }
+  .contact a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fas fa-robot"></i> HopeBot</h1>
+  <div class="burger" id="burger"><div></div><div></div><div></div></div>
+  <nav id="nav-links">
+    <a href="index.html">Home</a>
+    <a href="chat.html">Chat</a>
+    <a href="journal.html">Journal</a>
+    <a href="report.html">Report</a>
+    <a href="breathing.html">Breathing</a>
+    <a href="mindgames.html">Mind Games</a>
+    <a href="#.html">Help</a>
+  </nav>
+</header>
+
+<div class="help-container">
+  <h2>Welcome to HopeBot Help</h2>
+  <p>HopeBot is your personal school support assistant at <strong>Mengo Senior School</strong>. It helps students with:</p>
+  <ul>
+    <li><strong>Chat:</strong> Ask questions or share your thoughts in a safe environment.</li>
+    <li><strong>Journal:</strong> Write and save your personal notes securely.</li>
+    <li><strong>Report:</strong> Send anonymous reports or messages to the school counselor.</li>
+    <li><strong>Breathing:</strong> Use guided exercises to reduce stress and relax.</li>
+    <li><strong>Mind Games:</strong> Play interactive games to improve focus and memory.</li>
+  </ul>
+
+  <h2>How to Use HopeBot</h2>
+  <ul>
+    <li>Navigate through the menu at the top to access different features.</li>
+    <li>Click the buttons in each section to start or interact with games and exercises.</li>
+    <li>Your journal and reports are saved locally on your device for privacy.</li>
+    <li>Follow on-screen instructions for breathing exercises and games for the best experience.</li>
+  </ul>
+
+  <h2>Contact the Counselor</h2>
+  <p class="contact">
+    If you need help beyond HopeBot, you can contact your school counselor:<br>
+    <i class="fas fa-envelope"></i> Email: <a href="mailto:counselor@mengo.ac.ug">counselor@mengo.ac.ug</a><br>
+    <i class="fas fa-phone"></i> Phone: +256 700 000 000
+  </p>
+</div>
+
+<footer>&copy; 2026 Mengo Senior School | HopeBot Project</footer>
+
+<script>
+  // Hamburger toggle
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav-links');
+  burger.addEventListener('click', () => { nav.classList.toggle('active'); });
+</script>
+
+</body>
+</html>

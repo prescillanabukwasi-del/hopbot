@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HopeBot</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1><i class="fas fa-robot"></i> HopeBot</h1>
+    <div class="burger" id="burger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="nav-links">
+      <a href="#">Home</a>
+      <a href="chat.html">Chat</a>
+      <a href="journal.html">Journal</a>
+      <a href="report.html">Report</a>
+      <a href="breathing.html">Breathing</a>
+      <a href="mindgames.html">Mind Games</a>
+      <a href="help.html">Help</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Welcome to HopeBot</h2>
+    <p>
+      HopeBot is a school support assistant designed for School students. It helps you manage stress, emotions, and focus while providing safe tools like chat, journaling, breathing exercises, and fun mind games.  
+      Everything here is offline, private, and student-friendly perfect for learning and mental wellbeing.
+    </p>
+    <button class="btn" onclick="window.location.href='chat.html'">Start Chat</button>
+    <button class="btn" onclick="window.location.href='breathing.html'">Try Breathing</button>
+  </section>
+
+  <!-- Features / Cards -->
+  <section class="features">
+    <div class="card">
+      <i class="fas fa-comments"></i>
+      <h3>Chat</h3>
+      <p>Talk with HopeBot about your feelings, studies, or stress safely.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-book-open"></i>
+      <h3>Journal</h3>
+      <p>Write and save your personal thoughts securely and privately.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-user-secret"></i>
+      <h3>Anonymous Report</h3>
+      <p>Submit school concerns or report issues safely and anonymously.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-brain"></i>
+      <h3>Mind Games & Breathing</h3>
+      <p>Relax your mind, improve focus, and manage stress with fun exercises.</p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about">
+    <h2>About This Project </h2>
+    <p>
+      This project is part of a school initiative to support student mental health and academic focus.  
+      HopeBot demonstrates a fully functional offline chatbot system with safe student tools, designed to be explainable, exam-ready, and professional.  
+      All interactions are private and focused on improving wellbeing. 
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Mengo Senior School | HopeBot Project
+  </footer>
+
+  <!-- Hamburger Script -->
+  <script>
+    const burger = document.getElementById('burger');
+    const nav = document.getElementById('nav-links');
+
+    burger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>
